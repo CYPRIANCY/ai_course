@@ -18,14 +18,33 @@ class PerformanceAnalyzer:
 
     def calculate_class_average(self) -> float:
         if not self.students:
+            logger.warning("Cannot calculate class average: no students")
             return 0.0
 
         total = 0.0
+        
+        breakpoint()
 
         for student in self.students:
-            total += student.calculate_average()
+            student_average = student.calculate_average()
 
-        return total / len(self.students)
+            logger.debug(
+                "Student %s average: %.2f",
+                student.name,
+                student_average,
+            )
+
+            total += student_average
+
+        class_average = total / len(self.students)
+
+        logger.debug(
+            "Total of student averages: %.2f; class average: %.2f",
+            total,
+            class_average,
+        )
+
+        return class_average
 
     def count_passed(self) -> int:
         count_pass = 0
