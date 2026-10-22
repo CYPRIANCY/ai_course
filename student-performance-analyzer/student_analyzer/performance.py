@@ -22,8 +22,6 @@ class PerformanceAnalyzer:
             return 0.0
 
         total = 0.0
-        
-        breakpoint()
 
         for student in self.students:
             student_average = student.calculate_average()

@@ -27,10 +27,10 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-   if __name__ == "__main__":
     logging.basicConfig(
         level=logging.DEBUG,
-        format="%(levelname)s:%(name)s:%(message)s",
+        format="%(asctime)s %(levelname)s:%(name)s:%(message)s",
+        filename="student_analyzer.log",
     )
 
     logger.info("Student Performance Analyzer starting")
