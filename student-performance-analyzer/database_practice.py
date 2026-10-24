@@ -22,11 +22,11 @@ connection.commit()
 
 cursor.execute("SELECT * FROM students")
 
-students = cursor.fetchall()
+student = cursor.fetchone()
 
-print("Students in database:")
+print("First students:", student)
 
-for student in students:
-    print(student)
+# for student in students:
+#     print(student)
 
 connection.close()
