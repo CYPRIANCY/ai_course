@@ -8,7 +8,7 @@ from api_practice import fetch_user
 class TestFetchUser(unittest.TestCase):
 
     @patch("api_practice.requests.get")
-    def test_fetch_user_success(self, mock_get):
+    def test_fetch_user_success(self, mock_get: Mock) -> None:
         mock_response = Mock()
         mock_response.status_code = 200
         mock_response.json.return_value = {
@@ -34,7 +34,7 @@ class TestFetchUser(unittest.TestCase):
     
 
     @patch("api_practice.requests.get")
-    def test_fetch_user_http_error(self, mock_get):
+    def test_fetch_user_http_error(self, mock_get: Mock) -> None:
         mock_response = Mock()
         mock_response.raise_for_status.side_effect = (
             requests.exceptions.HTTPError("404 Not Found")
@@ -51,7 +51,7 @@ class TestFetchUser(unittest.TestCase):
     
 
     @patch("api_practice.requests.get")
-    def test_fetch_user_missing_address(self, mock_get):
+    def test_fetch_user_missing_address(self, mock_get: Mock) -> None:
         mock_response = Mock()
         mock_response.json.return_value = {
             "id": 1,

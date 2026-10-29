@@ -6,22 +6,22 @@ from student_analyzer.performance import PerformanceAnalyzer
 
 class TestStudent(unittest.TestCase):
 
-    def setUp(self):
+    def setUp(self) -> None:
         self.student = Student("Test Student", [70, 80, 90])
 
-    def test_calculate_average(self):
+    def test_calculate_average(self) -> None:
         self.assertEqual(self.student.calculate_average(), 80.0)
 
         student2 = Student("Another Student", [20, 40])
         self.assertEqual(student2.calculate_average(), 30.0)
 
-    def test_empty_scores(self):
+    def test_empty_scores(self) -> None:
         # Pass an empty list [] as the scores argument
         student = Student("Empty Student", [])
         # Check that an empty score list returns 0
         self.assertEqual(student.calculate_average(), 0)
 
-    def test_invalid_score(self):
+    def test_invalid_score(self) -> None:
         # Start a student with valid scores first
         student = Student("Test Student", [70, 80, 90])
         
@@ -33,42 +33,42 @@ class TestStudent(unittest.TestCase):
         with self.assertRaises(TypeError):
             Student("Test", [True])
     
-    def test_is_passed(self):
+    def test_is_passed(self) -> None:
         # TODO: Create a student with average 80
         # Assert that is_passed() returns True
         student = Student("Alice", [80, 80, 80])
         self.assertTrue(student.is_passed())
 
-    def test_get_grade(self):
+    def test_get_grade(self) -> None:
         # TODO: Create a student with average 65
         # Assert that get_grade() returns "B"
         student = Student("Bob", [60, 70])  # Average is 65
         self.assertEqual(student.get_grade(), "B")
 
-    def test_text_score_raises_type_error(self):
+    def test_text_score_raises_type_error(self) -> None:
         # TODO: Assert that creating a student with ["hello", 80] raises TypeError
         with self.assertRaises(TypeError):
-            Student("Charlie", ["hello", 80])
+            Student("Charlie", ["hello", 80]) # type: ignore[list-item]
     
-    def test_scores_must_be_list(self):
+    def test_scores_must_be_list(self) -> None:
         with self.assertRaises(TypeError):
-            Student("Alice", "70, 80, 90")
+            Student("Alice", "70, 80, 90") # type: ignore[arg-type]
 
-    def test_get_grade_a(self):
+    def test_get_grade_a(self) -> None:
         student = Student("Alice", [70, 70, 70])
         self.assertEqual(student.get_grade(), "A")
 
-    def test_get_grade_c(self):
+    def test_get_grade_c(self) -> None:
         student = Student("Bob", [50, 50, 50])
         self.assertEqual(student.get_grade(), "C")
 
-    def test_get_grade_f(self):
+    def test_get_grade_f(self) -> None:
         student = Student("Charlie", [40, 40, 40])
         self.assertEqual(student.get_grade(), "F")
 
 class TestPerformanceAnalyzer(unittest.TestCase):
 
-    def setUp(self):
+    def setUp(self) -> None:
         self.student1 = Student("Cyprian", [70, 80, 90])
         self.student2 = Student("David", [12, 45, 25])
 
@@ -76,31 +76,31 @@ class TestPerformanceAnalyzer(unittest.TestCase):
             [self.student1, self.student2]
         )
 
-    def test_count_students(self):
+    def test_count_students(self) -> None:
         self.assertEqual(self.analyzer.count_students(), 2)
 
-    def test_count_passed(self):
+    def test_count_passed(self) -> None:
         self.assertEqual(self.analyzer.count_passed(), 1)
 
-    def test_count_failed(self):
+    def test_count_failed(self) -> None:
         self.assertEqual(self.analyzer.count_failed(), 1)
 
-    def test_get_top_student(self):
+    def test_get_top_student(self) -> None:
         self.assertEqual(self.analyzer.get_top_student(), "Cyprian")
     
-    def test_empty_class_count(self):
+    def test_empty_class_count(self) -> None:
         analyzer = PerformanceAnalyzer([])
         self.assertEqual(analyzer.count_students(), 0)
 
-    def test_empty_class_average(self):
+    def test_empty_class_average(self) -> None:
         analyzer = PerformanceAnalyzer([])
         self.assertEqual(analyzer.calculate_class_average(), 0)
     
-    def test_empty_class_top_student(self):
+    def test_empty_class_top_student(self) -> None:
         analyzer = PerformanceAnalyzer([])
         self.assertIsNone(analyzer.get_top_student())
 
-    def test_equal_average_top_student(self):
+    def test_equal_average_top_student(self) -> None:
         student1 = Student("Alice", [70, 80])
         student2 = Student("Bob", [60, 90])
 
@@ -108,7 +108,7 @@ class TestPerformanceAnalyzer(unittest.TestCase):
 
         self.assertEqual(analyzer.get_top_student(), "Alice")
     
-    def test_calculate_class_average(self):
+    def test_calculate_class_average(self) -> None:
         student1 = Student("Alice", [70, 80])
         student2 = Student("Bob", [60, 90])
 
@@ -116,7 +116,7 @@ class TestPerformanceAnalyzer(unittest.TestCase):
 
         self.assertEqual(analyzer.calculate_class_average(), 75.0)
     
-    def test_later_student_becomes_top_student(self):
+    def test_later_student_becomes_top_student(self) -> None:
         student1 = Student("Alice", [50, 60])
         student2 = Student("Bob", [90, 100])
 
@@ -124,7 +124,7 @@ class TestPerformanceAnalyzer(unittest.TestCase):
 
         self.assertEqual(analyzer.get_top_student(), "Bob")
     
-    def test_count_passed_with_mocks(self):
+    def test_count_passed_with_mocks(self) -> None:
         from unittest.mock import Mock
 
         student1 = Mock()
