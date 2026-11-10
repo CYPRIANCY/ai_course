@@ -1,6 +1,15 @@
 from fastapi import FastAPI, HTTPException 
+from pydantic import BaseModel, EmailStr
 
 app = FastAPI()
+
+class StudentCreate(BaseModel):
+    name: str
+    email: EmailStr
+
+class StudentUpdate(BaseModel):
+    name: str | None = None
+    email: EmailStr | None = None
 
 @app.get("/")
 def home():
@@ -30,6 +39,48 @@ def get_student_by_id(student_id: int):
         if student["id"] == student_id:
             return student
             
+    raise HTTPException(
+        status_code=404,
+        detail="Student not found"
+    )
+
+@app.post("/students", status_code=201)
+def create_student(student_data: StudentCreate):
+
+    # 1. Generate a new ID
+    new_id = max(student["id"] for student in students) + 1
+    # new_id = len(students) + 1
+
+    # 2. Create a dictionary containing:
+    #    id, name and email
+    new_student = {
+        "id": new_id,
+        "name": student_data.name,
+        "email": student_data.email
+    }
+
+    # 3. Add the new student to the students list
+    students.append(new_student)
+
+    # 4. Return the new student
+    return new_student
+
+@app.put("/students/{student_id}")
+def update_student(student_id: int, student_data: StudentCreate):
+
+    for student in students:
+
+        if student["id"] == student_id:
+
+            # 1. Update the student's name
+            student["name"] = student_data.name
+
+            # 2. Update the student's email
+            student["email"] = student_data.email
+            # 3. Return the updated student
+            return student
+
+    # 4. If the student is not found, raise a 404 error
     raise HTTPException(
         status_code=404,
         detail="Student not found"
